@@ -1,4 +1,8 @@
 import { useState, useEffect } from 'react'
+import Navbar from "./components/Navbar"
+import Hero from "./components/Hero"
+import Footer from "./components/Footer"
+import RaceCard from "./components/RaceCard"
 import './App.css'
 
 function App() {
@@ -59,12 +63,10 @@ function App() {
 
   return (
     <div>
-      <h1> F1 Trackside</h1>
-      <p> Welcome to a Formula1 dashboard </p>
     
-       <p> ==================================================</p>
-     
-        <p> ==================================================</p>
+       <Hero />
+      <Navbar/> 
+      <RaceCard />
 
    
        {leaderboard.map((driver) => (
@@ -73,9 +75,11 @@ function App() {
     <p>{driver.name}</p>
     <p>{driver.team}</p>
     <hr />
+
   </div>
 ))}
   
+    <Footer/>
     </div>
     
      
