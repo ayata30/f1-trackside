@@ -109,3 +109,44 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+
+.header-hero{
+
+  background-color: rgb(47, 55, 79);
+}
+
+.nav-buttons{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+button{
+   border: 1px solid #221b28;
+     border-radius: 10px;
+     padding: 10px;
+     margin: 5px;
+     width: 100px;
+     box-shadow: 2px 2px 2px rgb(31, 58, 131);
+     cursor: pointer;
+     background-color:#7893b1
+}
+
+button:hover{
+
+  transform: translateY(-6px);
+}
+.select-btn{
+  
+   border: 1px solid #221b28;
+     border-radius: 10px;
+     padding: 20px;
+     margin: 0px;
+     width: 150px;
+     box-shadow: 2px 2px 2px rgb(79, 103, 75);
+     cursor: pointer;
+     background-color:#27361f
+}
+section{
+  gap: 10px;
+}
