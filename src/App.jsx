@@ -6,13 +6,15 @@ import Footer from "./components/Footer"
 import RaceCard from "./components/RaceCard"
 import './App.css'
 import RaceSelector from './components/RaceSelector'
+import SessionSelector from "./components/SessionSelector"
 
 function App() {
-
 
   const [raceResult, setraceResult] = useState([])
 
   const [drivers, setDrivers] = useState([])
+  const [meetingKey, setMeetingKey] = useState("");
+  const [sessionKey, setSessionKey] = useState("");
 
 
   const leaderboard = raceResult.map((result) =>{
@@ -68,10 +70,21 @@ function App() {
     
        <Hero />
       <Navbar/> 
-      <RaceSelector />
-      <RaceCard />
-
       
+      <h4>Races & Sessions</h4>
+    <RaceSelector
+    meetingKey={meetingKey}
+    setMeetingKey={setMeetingKey}
+/>
+
+    <SessionSelector 
+        race={meetingKey}
+        sessionKey={sessionKey}
+        setSessionKey={setSessionKey} 
+
+        />
+        <hr/>
+      <RaceCard />
 
    <h3> Latest Race leaderboard of 2026</h3>
        {leaderboard.map((driver) => (

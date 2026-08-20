@@ -1,8 +1,10 @@
 function RaceCard() {
     return (
         <div>
-            <h3>Belgian Grand Prix</h3>
-            <p>Winner: Oscar Piastri</p>
+            <h5>Race Card</h5>
+            <h4>feature comming soon </h4>
+            <p></p>
+            
         </div>
     )
 }

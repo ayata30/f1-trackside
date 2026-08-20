@@ -1,33 +1,24 @@
 import { useState, useEffect } from "react";
 
 
-function RaceSelector(){
+function RaceSelector({meetingKey, setMeetingKey}){
 
     // meeting is the entire race weekend 
 
   //  const [selectedRace, setSelectedRace] = useState("");
     const [meetings, setMeetings] = useState([]);
     // race week user picks
-    const [meetingKey, setMeetingKey] = useState("");
-   // const [selectedMeeting, setSelectedMeeting] = useState("");
-
-   // sessions bleong to delcted race week
-    const [sessions, setSessions] = useState([]);
-   // const [sessionsKey, setSessionsKey] = useState("");
-
+    
+   // sessions bleong to selected race week
    
     useEffect(() => {
-        if (!meetingKey) return;
-
-        fetch(`https://api.open.f1.org/v1/sessions?meeting_key=${meetingKey}`
-
-        )
+        fetch(`https://api.openf1.org/v1/meetings`)
         .then((res) => res.json())
         .then((data) => {
-            setSessions(data);
+            setMeetings(data);
         
         });
-    }, [meetingKey]);
+    }, []);
 
     return(
         <select 
@@ -40,37 +31,11 @@ function RaceSelector(){
                     value={meeting.meeting_key}
                     >
                         {meeting.meeting_name}
+                        {meeting.date_start}
                     </option>
                 ))}
                 
             </select>
     ); }
 
-
-            /*)
-        <section >
-
-  
-        <div>
-            <h2>Select Race</h2>
-
-            <select className="select-btn">
-                <option>Belgian Grand Prix</option>
-                <option>British Grand Prix</option>
-                <option>Monaco Grand Prix</option>
-            </select>
-
-        </div>
-
-        
-              </section>
-
-              <section>
-                <div>
-
-                </div>
-              </section>
-    )
-}
-*/
 export default RaceSelector;
