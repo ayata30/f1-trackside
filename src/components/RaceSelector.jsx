@@ -15,10 +15,17 @@ function RaceSelector({meetingKey, setMeetingKey}){
         fetch(`https://api.openf1.org/v1/meetings`)
         .then((res) => res.json())
         .then((data) => {
-            setMeetings(data);
-        
-        });
-    }, []);
+            console.log(data)
+            if (Array.isArray(data)) {
+                setMeetings(data);
+            } else {
+                console.error(
+                    "Meetings API did not return an array:",
+                    data
+                );
+          
+        }
+    }); }, []);
 
     return(
         <select 

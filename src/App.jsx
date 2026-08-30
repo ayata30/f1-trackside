@@ -4,6 +4,7 @@ import Hero from "./components/Hero"
 import DriverCard from "./components/DriverCard"
 import Footer from "./components/Footer"
 import RaceCard from "./components/RaceCard"
+import LeaderBoard from "./components/LeaderBoard";
 import './App.css'
 import RaceSelector from './components/RaceSelector'
 import SessionSelector from "./components/SessionSelector"
@@ -32,12 +33,13 @@ function App() {
 );
 
   useEffect(()=> {
-    fetch("https://api.openf1.org/v1/drivers?&session_key=latest",
+    if (!sessionKey) return;
+    fetch(`https://api.openf1.org/v1/drivers?&session_key=${sessionKey}`,
     )
     .then((response) => response.json())
     .then((jsonContent) => {
 
-     console.log(jsonContent)
+     console.log("DRIVERS:",jsonContent)
      if (Array.isArray(jsonContent)) {
     setDrivers(jsonContent)
 }
@@ -46,21 +48,31 @@ function App() {
 
 
 
-  }, [] )
+  }, [sessionKey] )
 
   useEffect (() =>{
-    fetch("https://api.openf1.org/v1/session_result?session_key=latest&position%3C=20",
+      if (!sessionKey) return;
 
-    ) 
+    console.log("SELECTED SESSION:", sessionKey);
+
+
+    fetch(`https://api.openf1.org/v1/session_result?session_key=${sessionKey}`) 
     .then((response) => response.json())
     .then((jsonContent) => {
-        console.log(jsonContent)
+        console.log("race results:", jsonContent);
 
-  if (Array.isArray(jsonContent)) {
-    setraceResult(jsonContent)
-  }
+        if (Array.isArray(jsonContent)) {
+                setraceResult(jsonContent);
+            } else {
+                console.error("Session result API did not return an array:", jsonContent);
+      
+        }
+        
 })
-   }, [])
+.catch(error => {
+            console.error("RESULT ERROR:", error);
+        });
+   }, [sessionKey]);
 
 
 
@@ -86,17 +98,9 @@ function App() {
         <hr/>
       <RaceCard />
 
-   <h3> Latest Race leaderboard of 2026</h3>
-       {leaderboard.map((driver) => (
-    <div key={driver.position}>
-    <h3>{driver.position}</h3>
-    <p>{driver.name}</p>
-    <p>{driver.team}</p>
-    <hr />
+      <LeaderBoard leaderboard={leaderboard} />
 
-  </div>
-))}
-  
+
     <Footer/>
 
   

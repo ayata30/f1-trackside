@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 function SessionSelector({ race, sessionKey, setSessionKey }) {
 
     const [sessions, setSessions] = useState([]);
+    const [positions, setPositions] = useState([]);
+
 
     useEffect(() => {
         if (!race) return;
@@ -10,7 +12,7 @@ function SessionSelector({ race, sessionKey, setSessionKey }) {
         fetch(`https://api.openf1.org/v1/sessions?meeting_key=${race}`)
             .then(res => res.json())
             .then(data => {
-                console.log("sessions:", data);
+                console.log("sessions1:", data);
                 setSessions(data);
                 
             });
@@ -22,8 +24,12 @@ function SessionSelector({ race, sessionKey, setSessionKey }) {
                 value={sessionKey}
                 onChange={(e)=> setSessionKey(e.target.value)}
                 >
+                    <option value="">Select a session</option>
     {sessions.map(session => (
-        <option key={session.session_key}>
+        <option 
+                key={session.session_key}
+                value ={session.session_key}
+                >
             {session.session_name}
         </option>
     ))}
