@@ -182,3 +182,30 @@
     border-right-color: var(--border);
   }
 }
+
+.constructor-standings {
+  max-width: 800px;
+  margin: 40px auto;
+  padding: 24px;
+  text-align: left;
+}
+
+.constructor-standings table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.constructor-standings th,
+.constructor-standings td {
+  padding: 12px 16px;
+  border-bottom: 1px solid #444;
+  text-align: left;
+}
+
+.constructor-standings th {
+  font-weight: 700;
+}
+
+.constructor-standings tbody tr:hover {
+  background: rgba(128, 128, 128, 0.12);
+}

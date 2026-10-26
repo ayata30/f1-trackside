@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar"
 import Hero from "./components/Hero"
 import DriverCard from "./components/DriverCard"
@@ -8,6 +9,9 @@ import LeaderBoard from "./components/LeaderBoard";
 import './App.css'
 import RaceSelector from './components/RaceSelector'
 import SessionSelector from "./components/SessionSelector"
+import InfoCard from './components/InfoCard'
+import DriverComparison from "./components/DriverComparison";
+import ConstructorStandings from "./components/ConstructorStandings";
 
 function App() {
 
@@ -31,6 +35,22 @@ function App() {
     };
   }
 );
+
+
+useEffect(() => {
+  fetch("https://api.openf1.org/v1/drivers?session_key=latest")
+    .then((response) => response.json())
+    .then((jsonContent) => {
+      console.log("COMPARISON DRIVERS:", jsonContent);
+
+      if (Array.isArray(jsonContent)) {
+        setDrivers(jsonContent);
+      }
+    })
+    .catch((error) => {
+      console.error("DRIVER ERROR:", error);
+    });
+}, []);
 
   useEffect(()=> {
     if (!sessionKey) return;
@@ -82,11 +102,21 @@ function App() {
     
        <Hero />
       <Navbar/> 
+
       
-      <h4>Races & Sessions</h4>
+      <h2>Races & Sessions</h2>
     <RaceSelector
     meetingKey={meetingKey}
     setMeetingKey={setMeetingKey}
+/>
+
+<InfoCard
+    title="Leader"
+    value="Lando Norris"
+/>
+<InfoCard
+    title="Laps"
+    value="57"
 />
 
     <SessionSelector 
@@ -99,11 +129,19 @@ function App() {
       <RaceCard />
 
       <LeaderBoard leaderboard={leaderboard} />
+      <ConstructorStandings sessionKey={sessionKey} />
 
+      <DriverComparison
+  drivers={drivers}
+  raceResult={raceResult}
+/>
+
+        <Routes>
+                <Route path="/ai-rundown"  />
+                <Route path="/standings"  />
+            </Routes>
 
     <Footer/>
-
-  
     </div>
     
      
