@@ -103,21 +103,14 @@ useEffect(() => {
        <Hero />
       <Navbar/> 
 
-      
+      <section className="panel" >
       <h2>Races & Sessions</h2>
     <RaceSelector
     meetingKey={meetingKey}
     setMeetingKey={setMeetingKey}
 />
+</section>
 
-<InfoCard
-    title="Leader"
-    value="Lando Norris"
-/>
-<InfoCard
-    title="Laps"
-    value="57"
-/>
 
     <SessionSelector 
         race={meetingKey}
@@ -127,14 +120,18 @@ useEffect(() => {
         />
         <hr/>
       <RaceCard />
-
+  <section className="panel" >
       <LeaderBoard leaderboard={leaderboard} />
+      </section>
+        <section className="panel" >
       <ConstructorStandings sessionKey={sessionKey} />
-
+</section>
+<section className="panel" >
       <DriverComparison
   drivers={drivers}
   raceResult={raceResult}
 />
+</section>
 
         <Routes>
                 <Route path="/ai-rundown"  />
