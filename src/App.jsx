@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar"
 import Hero from "./components/Hero"
 import DriverCard from "./components/DriverCard"
 import Footer from "./components/Footer"
-import RaceCard from "./components/RaceCard"
 import LeaderBoard from "./components/LeaderBoard";
 import './App.css'
 import RaceSelector from './components/RaceSelector'
@@ -97,47 +96,51 @@ useEffect(() => {
 
 
   return (
-    <div>
-    
-       <Hero />
+    <div className="app">
+      <Hero />
       <Navbar/> 
-
-      <section className="panel" >
-      <h2>Races & Sessions</h2>
-    <RaceSelector
-    meetingKey={meetingKey}
-    setMeetingKey={setMeetingKey}
-/>
-</section>
-
-
-    <SessionSelector 
-        race={meetingKey}
-        sessionKey={sessionKey}
-        setSessionKey={setSessionKey} 
-
-        />
-        <hr/>
-      <RaceCard />
-  <section className="panel" >
-      <LeaderBoard leaderboard={leaderboard} />
-      </section>
+      
+      <main>
         <section className="panel" >
-      <ConstructorStandings sessionKey={sessionKey} />
-</section>
-<section className="panel" >
+        <h2>Races</h2>
+      <RaceSelector
+      meetingKey={meetingKey}
+      setMeetingKey={setMeetingKey}
+      />
+    </section>
+
+
+     <section className="panel">
+      <h2>Sessions</h2>
+      <SessionSelector 
+          race={meetingKey}
+          sessionKey={sessionKey}
+          setSessionKey={setSessionKey} 
+          />
+      </section>
+
+    
+    <section className="panel" >
+        <LeaderBoard leaderboard={leaderboard} />
+        </section>
+          <section className="panel" >
+        <ConstructorStandings sessionKey={sessionKey} />
+    </section>
+
+    <section className="panel" >
       <DriverComparison
-  drivers={drivers}
-  raceResult={raceResult}
-/>
-</section>
+      drivers={drivers}
+      raceResult={raceResult}
+    />
+    </section>
 
         <Routes>
-                <Route path="/ai-rundown"  />
-                <Route path="/standings"  />
-            </Routes>
-
-    <Footer/>
+            <Route path="/ai-rundown"  />
+            <Route path="/standings"  />
+        </Routes>
+      </main>
+        
+      <Footer/>
     </div>
     
      

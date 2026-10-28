@@ -1,3 +1,11 @@
+/* F1 Trackside — global page layout */
+#root {
+  min-height: 100vh;
+}
+
+* {
+  box-sizing: border-box;
+}
 .counter {
   font-size: 16px;
   padding: 5px 10px;
@@ -214,7 +222,7 @@
   max-width: 1000px;
   margin: 28px auto;
   padding: 24px;
-  background: #5876ae;
+  background: #364663;
   border: 1px solid #2b3340;
   border-radius: 6px;
   color: #f5f5f5;
