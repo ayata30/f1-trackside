@@ -9,7 +9,6 @@ import LeaderBoard from "./components/LeaderBoard";
 import './App.css'
 import RaceSelector from './components/RaceSelector'
 import SessionSelector from "./components/SessionSelector"
-import InfoCard from './components/InfoCard'
 import DriverComparison from "./components/DriverComparison";
 import ConstructorStandings from "./components/ConstructorStandings";
 

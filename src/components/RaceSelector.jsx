@@ -38,7 +38,15 @@ function RaceSelector({meetingKey, setMeetingKey}){
                     value={meeting.meeting_key}
                     >
                         {meeting.meeting_name}
-                        {meeting.date_start}
+                        {" || "}
+                        
+                        {new Date(meeting.date_start).toLocaleDateString(
+                            "en-US", {
+    
+                        month: "short",
+                        day: "numeric",
+                        year: "numeric",}
+                     )}
                     </option>
                 ))}
                 

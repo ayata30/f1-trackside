@@ -1,15 +1,18 @@
+import { Link } from "react-router-dom";
+
 function Navbar(){
+
+
     return (
         <nav> 
-
             <section className="nav-buttons">
-                    <button> Races </button>
-                    <button> Calendar </button>
-                    <button> Standings </button>
-            </section>
+            
 
-          
-             
+                <Link to="/ai-rundown">
+                <button>AI rundown</button></Link>
+                <Link to="/standings">
+                <button>Standings</button></Link>
+            </section>
 
         </nav>
     )
