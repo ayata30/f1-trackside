@@ -1,21 +1,43 @@
 function LeaderBoard({ leaderboard }) {
+
+     const sortedLeaderBoard = [...leaderboard].sort(
+
+                (a, b) => a.postion - b.position );
+            
     return (
         <>
             <h1>Race leaderboard </h1>
 
             {leaderboard.length === 0 ? (
-                <p> No results avaliable for this session yet.</p>
+                <p> No results avaliable for this race yet.</p>
             ):(
+
+                <table>
+                    <thead>
+                     <tr>
+                        <th> Pos. </th>
+                        <th> Driver</th>
+                        <th>Team</th>
+                        <th>Points</th>
+                     </tr>
                 
-            leaderboard.map((driver) => (
-                <div key={driver.position}>
-                   <h3>{driver.position}</h3>
-                    <p>{driver.name}</p>
-                    <p>{driver.team}</p>
+                    </thead>
+
+
+            <tbody>
+            {sortedLeaderBoard.map((driver) => (
+                <tr key={driver.position}>
+                   <td>{driver.position}</td>
+                    <td>{driver.name}</td>
+                    <td>{driver.team}</td>
+                    <td>{driver.points}</td>
                    
-                </div>
-            ))
-            )}
+                </tr>
+            ))}
+                </tbody>
+                </table>
+            )
+            }
         </>
     );
 }

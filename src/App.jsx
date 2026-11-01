@@ -9,6 +9,7 @@ import './App.css'
 import RaceSelector from './components/RaceSelector'
 import SessionSelector from "./components/SessionSelector"
 import DriverComparison from "./components/DriverComparison";
+import DriverStandings from "./components/DriverStandings";
 import ConstructorStandings from "./components/ConstructorStandings";
 
 function App() {
@@ -123,8 +124,13 @@ useEffect(() => {
     <section className="panel" >
         <LeaderBoard leaderboard={leaderboard} />
         </section>
+
           <section className="panel" >
         <ConstructorStandings sessionKey={sessionKey} />
+    </section>
+
+          <section className="panel" >
+        <DriverStandings sessionKey={sessionKey} />
     </section>
 
     <section className="panel" >
