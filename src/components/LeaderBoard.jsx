@@ -2,7 +2,7 @@ function LeaderBoard({ leaderboard }) {
 
      const sortedLeaderBoard = [...leaderboard].sort(
 
-                (a, b) => a.postion - b.position );
+                (a, b) => a.position - b.position );
             
     return (
         <>
@@ -26,18 +26,22 @@ function LeaderBoard({ leaderboard }) {
 
             <tbody>
             {sortedLeaderBoard.map((driver) => (
-                <tr key={driver.position}>
+                <tr key={driver.drivevr_number}>
                    <td>{driver.position}</td>
                     <td>{driver.name}</td>
                     <td>{driver.team}</td>
                     <td>{driver.points}</td>
                    
                 </tr>
+                
             ))}
+           
                 </tbody>
+                 console.log("Leaderboard:", leaderboard);
                 </table>
             )
             }
+            
         </>
     );
 }

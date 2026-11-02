@@ -1,26 +1,51 @@
-
 const BASE_URL = "https://api.openf1.org/v1";
 
-export async function getDrivers(sessionKey = "latest") {
-  const response = await fetch(
-    `${BASE_URL}/drivers?session_key=${sessionKey}`
-  );
+let requestQueue = Promise.resolve();
+let lastRequestTime = 0;
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch drivers: ${response.status}`);
-  }
+async function fetchOpenF1(url) {
+    const request = requestQueue.then(async () => {
+        const elapsed = Date.now() - lastRequestTime;
+        const delay = Math.max(0, 500 - elapsed);
 
-  return response.json();
+        if (delay > 0) {
+            await new Promise(resolve => setTimeout(resolve, delay));
+        }
+
+        lastRequestTime = Date.now();
+
+        const response = await fetch(url);
+
+        if (!response.ok) {
+            throw new Error(`OpenF1 API error: ${response.status}`);
+        }
+
+        return response.json();
+    });
+
+    requestQueue = request.catch(() => {});
+
+    return request;
 }
 
-export async function getSessionResults(sessionKey = "latest") {
-  const response = await fetch(
-    `${BASE_URL}/session_result?session_key=${sessionKey}`
-  );
+export function getDrivers(sessionKey = "latest") {
+    return fetchOpenF1(
+        `${BASE_URL}/drivers?session_key=${sessionKey}`
+    );
+}
 
-  if (!response.ok) {
-    throw new Error(`Failed to fetch session results: ${response.status}`);
-  }
+export function getSessionResults(sessionKey = "latest") {
+    return fetchOpenF1(
+        `${BASE_URL}/session_result?session_key=${sessionKey}`
+    );
+}
 
-  return response.json();
+export function getMeetings() {
+    return fetchOpenF1(`${BASE_URL}/meetings`);
+}
+
+export function getSessions(meetingKey) {
+    return fetchOpenF1(
+        `${BASE_URL}/sessions?meeting_key=${meetingKey}`
+    );
 }

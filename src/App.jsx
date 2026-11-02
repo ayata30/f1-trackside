@@ -11,90 +11,58 @@ import SessionSelector from "./components/SessionSelector"
 import DriverComparison from "./components/DriverComparison";
 import DriverStandings from "./components/DriverStandings";
 import ConstructorStandings from "./components/ConstructorStandings";
+import { getDrivers, getSessionResults } from "./api/openf1";
 
 function App() {
 
-  const [raceResult, setraceResult] = useState([])
-
+  const [raceResult, setRaceResult] = useState([])
   const [drivers, setDrivers] = useState([])
   const [meetingKey, setMeetingKey] = useState("");
   const [sessionKey, setSessionKey] = useState("");
 
 
-  const leaderboard = raceResult.map((result) =>{
-    const driver = drivers.find(
-      (driver) => driver.driver_number == result.driver_number
-    )
-
-    return {
-      position: result.position,
-       name: driver ? driver.full_name : "Unknown Driver",
-    team: driver ? driver.team_name : "Unknown Team",
-   
-    };
-  }
-);
-
-
 useEffect(() => {
-  fetch("https://api.openf1.org/v1/drivers?session_key=latest")
-    .then((response) => response.json())
-    .then((jsonContent) => {
-      console.log("COMPARISON DRIVERS:", jsonContent);
-
-      if (Array.isArray(jsonContent)) {
-        setDrivers(jsonContent);
-      }
-    })
-    .catch((error) => {
-      console.error("DRIVER ERROR:", error);
-    });
-}, []);
-
-  useEffect(()=> {
     if (!sessionKey) return;
-    fetch(`https://api.openf1.org/v1/drivers?&session_key=${sessionKey}`,
-    )
-    .then((response) => response.json())
-    .then((jsonContent) => {
 
-     console.log("DRIVERS:",jsonContent)
-     if (Array.isArray(jsonContent)) {
-    setDrivers(jsonContent)
-}
-   
+    getDrivers(sessionKey)
+        .then(data => {
+            console.log("DRIVERS:", data);
+            setDrivers(Array.isArray(data) ? data : []);
+        })
+        .catch(error => console.error("DRIVER ERROR:", error));
+}, [sessionKey]);
+
+        useEffect(() => {
+        setRaceResult([]);
+
+        if (!sessionKey) return;
+
+        getSessionResults(sessionKey)
+            .then((data) => {
+                console.log("RACE RESULTS:", data);
+                setRaceResult(Array.isArray(data) ? data : []);
+            })
+            .catch((error) => {
+                console.error("RESULT ERROR:", error);
+            });
+    }, [sessionKey]);
+
+           const leaderboard = raceResult.map((result) => {
+        const driver = drivers.find(
+            (driver) =>
+                String(driver.driver_number) ===
+                String(result.driver_number)
+        );
+
+        return {
+            driver_number: result.driver_number,
+            position: result.position,
+            name: driver ? driver.full_name : "Unknown Driver",
+            team: driver ? driver.team_name : "Unknown Team",
+            points: result.points ?? "—",
+        };
     });
-
-
-
-  }, [sessionKey] )
-
-  useEffect (() =>{
-      if (!sessionKey) return;
-
-    console.log("SELECTED SESSION:", sessionKey);
-
-
-    fetch(`https://api.openf1.org/v1/session_result?session_key=${sessionKey}`) 
-    .then((response) => response.json())
-    .then((jsonContent) => {
-        console.log("race results:", jsonContent);
-
-        if (Array.isArray(jsonContent)) {
-                setraceResult(jsonContent);
-            } else {
-                console.error("Session result API did not return an array:", jsonContent);
-      
-        }
-        
-})
-.catch(error => {
-            console.error("RESULT ERROR:", error);
-        });
-   }, [sessionKey]);
-
-
-
+   
 
   return (
     <div className="app">
@@ -123,6 +91,7 @@ useEffect(() => {
     
     <section className="panel" >
         <LeaderBoard leaderboard={leaderboard} />
+        
         </section>
 
           <section className="panel" >
@@ -150,8 +119,7 @@ useEffect(() => {
     </div>
     
      
-  )
+  );
 }
 
-
-export default App
+export default App;
