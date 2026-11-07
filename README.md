@@ -1,16 +1,80 @@
-# React + Vite
+# F1 Trackside 🏎️
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**The fastest way to understand a Formula 1 weekend.**
 
-Currently, two official plugins are available:
+F1 Trackside is a Formula 1 dashboard built with React that brings race results, driver standings, constructor standings, and driver comparisons together in one place.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+**[Live Demo](https://f1-trackside-zeta.vercel.app/)**
 
-## React Compiler
+## Features
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Race Selection:** Browse Formula 1 meetings across multiple seasons.
+- **Session Selection:** Select available sessions, including practice, qualifying, and race sessions.
+- **Race Leaderboard:** View driver finishing positions, teams, and points.
+- **Driver Standings:** Explore the drivers' championship standings.
+- **Constructor Standings:** Compare teams based on championship points.
+- **Driver Comparison:** Compare driver performance using session data.
 
-## Expanding the ESLint configuration
+## Tech Stack
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- JavaScript
+- Vite
+- CSS
+- OpenF1 API
+
+## Data Source
+
+F1 Trackside uses the [OpenF1 API](https://openf1.org/) to retrieve Formula 1 data, including race meetings, sessions, driver information, race results, and championship standings.
+
+API requests are managed through a shared request queue to help control request frequency and reduce rate-limit errors.
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- npm
+
+### Installation
+
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/ayata30/f1-trackside.git
+   ```
+
+2. Navigate into the project directory:
+
+   ```bash
+   cd f1-trackside
+   ```
+
+3. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+4. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+5. Open the local URL provided by Vite in your browser.
+
+## Future Improvements
+
+- AI-powered race weekend summaries.
+- Improved classification and driver status information, including DNFs.
+- Email notifications for race updates.
+- Additional driver performance insights.
+
+## Acknowledgments
+
+- [OpenF1](https://openf1.org/) for providing Formula 1 data.
+
+---
+
+Built with React and JavaScript.
