@@ -13,14 +13,20 @@ async function fetchOpenF1(url) {
         }
 
         lastRequestTime = Date.now();
+        
 
         const response = await fetch(url);
 
-        if (!response.ok) {
-            throw new Error(`OpenF1 API error: ${response.status}`);
-        }
+        const data = await response.json();
 
-        return response.json();
+
+        if (!response.ok) {
+            const message = 
+            data.detail || `OpenF1 API error: ${response.status}`;
+
+            throw new Error(message);
+        }
+        return data;
     });
 
     requestQueue = request.catch(() => {});
@@ -47,5 +53,17 @@ export function getMeetings() {
 export function getSessions(meetingKey) {
     return fetchOpenF1(
         `${BASE_URL}/sessions?meeting_key=${meetingKey}`
+    );
+}
+
+export function getChampionshipDrivers(sessionKey) {
+    return fetchOpenF1(
+        `${BASE_URL}/championship_drivers?session_key=${encodeURIComponent(sessionKey)}`
+    );
+}
+
+export function getChampionshipTeams(sessionKey) {
+    return fetchOpenF1(
+        `${BASE_URL}/championship_teams?session_key=${encodeURIComponent(sessionKey)}`
     );
 }

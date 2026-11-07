@@ -1,4 +1,8 @@
 import { useEffect, useState } from "react";
+import {
+  getChampionshipDrivers,
+  getDrivers
+} from "../api/openf1";
 
 function DriverStandings({ sessionKey }) {
   const [drivers, setDrivers] = useState([]);
@@ -20,29 +24,15 @@ function DriverStandings({ sessionKey }) {
       setDrivers([]);
 
       try {
-        const [standingsResponse, driversResponse] = await Promise.all([
-          fetch(
-            `https://api.openf1.org/v1/championship_drivers?session_key=${encodeURIComponent(sessionKey)}`,
-            { signal: controller.signal }
-          ),
-          fetch(
-            `https://api.openf1.org/v1/drivers?session_key=${encodeURIComponent(sessionKey)}`,
-            { signal: controller.signal }
-          )
-        ]);
-
-        if (!standingsResponse.ok || !driversResponse.ok) {
-          throw new Error("Failed to load standings.");
-        }
-
         const [standings, driverInfo] = await Promise.all([
-          standingsResponse.json(),
-          driversResponse.json()
+          getChampionshipDrivers(sessionKey),
+          getDrivers(sessionKey)
         ]);
+         
 
         const combined = standings.map((standing) => {
           const driver = driverInfo.find(
-            (d) => d.driver_number === standing.driver_number
+            (d) => String(d.driver_number) === String(standing.driver_number)
           );
 
           return {

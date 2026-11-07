@@ -1,5 +1,6 @@
 
 import { useEffect, useState } from "react";
+import { getChampionshipTeams } from "../api/openf1";
 
 function ConstructorStandings({ sessionKey }) {
   const [constructors, setConstructors] = useState([]);
@@ -21,18 +22,9 @@ function ConstructorStandings({ sessionKey }) {
       setConstructors([]);
 
       try {
-        const response = await fetch(
-          `https://api.openf1.org/v1/championship_teams?session_key=${encodeURIComponent(sessionKey)}`,
-          { signal: controller.signal }
-        );
-
-        if (!response.ok) {
-          throw new Error("Failed to load constructor standings.");
-        }
-
-        const data = await response.json();
-
-        const sortedConstructors = data.sort(
+        const data = await getChampionshipTeams(sessionKey);
+        
+        const sortedConstructors = [...data].sort(
           (a, b) => a.position_current - b.position_current
         );
 
