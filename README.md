@@ -13,10 +13,6 @@
 ### Driver Comparison
 ![Driver Comparison](screenshots/driver-comparison.png)
 
-### Standings
-![Standings](screenshots/standings.png)
-
-
 ## How It Works
 
 1. Users select a Formula 1 meeting.
