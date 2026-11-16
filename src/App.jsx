@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react'
-import { Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar"
 import Hero from "./components/Hero"
 import Footer from "./components/Footer"
@@ -13,7 +12,6 @@ import ConstructorStandings from "./components/ConstructorStandings";
 import { getDrivers, getSessionResults } from "./api/openf1";
 
 function App() {
-  
 
   const [raceResult, setRaceResult] = useState([])
   const [drivers, setDrivers] = useState([])
@@ -23,96 +21,79 @@ function App() {
 
 useEffect(() => {
     if (!sessionKey) return;
-
     getDrivers(sessionKey)
         .then(data => {
+          console.log("DRIVER SAMPLE:", data[0]);
             setDrivers(Array.isArray(data) ? data : []);
         })
         .catch(error => console.error("DRIVER ERROR:", error));
+     
 }, [sessionKey]);
 
         useEffect(() => {
-        setRaceResult([]);
+  setRaceResult([]);
 
-        if (!sessionKey) return;
+  if (!sessionKey) return;
 
-        getSessionResults(sessionKey)
-            .then((data) => {
-                console.log("RACE RESULTS:", data);
-                setRaceResult(Array.isArray(data) ? data : []);
-            })
-            .catch((error) => {
-                console.error("RESULT ERROR:", error);
-            });
-    }, [sessionKey]);
+  console.log("FETCHING RESULTS FOR SESSION:", sessionKey);
 
-console.table(
-  raceResult.map(result => ({
-    driver_number: result.driver_number,
-    position: result.position,
-    points: result.points
-  }))
-);
+  getSessionResults(sessionKey)
+    .then((data) => {
+      console.log("RESULTS RECEIVED:", data);
+      console.log("RESULTS ARRAY?", Array.isArray(data));
 
-
-              const leaderboard = [...raceResult]
-          .sort((a, b) => {
-              const positionA = Number(a.position);
-              const positionB = Number(b.position);
-
-              const invalidA =
-                a.position == null ||
-                a.position === "" ||
-                !Number.isFinite(positionA) ||
-                positionA <= 0;
-
-              const invalidB =
-                b.position == null ||
-                b.position === "" ||
-                !Number.isFinite(positionB) ||
-                positionB <= 0;
-
-              if (invalidA && !invalidB) return 1;
-              if (!invalidA && invalidB) return -1;
-              if (invalidA && invalidB) return 0;
-
-              return positionA - positionB;
-          })
-         .map((result) => {
-        const driver = drivers.find(
-            (driver) =>
-                String(driver.driver_number) ===
-                String(result.driver_number)
-        );
-        console.table(
-  raceResult.map(result => ({
-    driver_number: result.driver_number,
-    position: result.position,
-    status: result.status,
-    points: result.points
-  }))
-);
-
-        return {
-            driver_number: result.driver_number,
-            position: result.position,
-            name: driver ? driver.full_name : "Unknown Driver",
-            team: driver ? driver.team_name : "Unknown Team",
-            points: result.points ?? "—",
-        };
+      setRaceResult(Array.isArray(data) ? data : []);
+    })
+    .catch((error) => {
+      console.error("RESULT FETCH FAILED:", error);
     });
-   
+}, [sessionKey]);
 
-    console.table(
-  raceResult.map(result => ({
-    driver_number: result.driver_number,
-    position: result.position,
-    status: result.status,
-    points: result.points
-  }))
-);
 
-  
+    const leaderboard = [...raceResult]
+  .sort((a, b) => {
+    // Classified drivers first, ordered by position.
+    if (a.position != null && b.position != null) {
+      return a.position - b.position;
+    }
+
+    if (a.position != null) return -1;
+    if (b.position != null) return 1;
+
+    // Keep unclassified drivers together.
+    return b.number_of_laps - a.number_of_laps;
+  })
+  .map((result) => {
+    const driver = drivers.find(
+      (driver) =>
+        String(driver.driver_number) === String(result.driver_number)
+    );
+
+    let status = "Finished";
+
+    if (result.dsq) {
+      status = "Disqualified";
+    } else if (result.dns) {
+      status = "Did not start";
+    } else if (result.dnf) {
+      status = "Did not finish";
+    }
+
+    return {
+      
+      driver_number: result.driver_number,
+      position: result.position,
+      name: driver?.full_name ?? "Unknown Driver",
+      team: driver?.team_name ?? "Unknown Team",
+      team_colour: driver?.team_colour ?? "64748b",
+      points: result.points ?? 0,
+      laps: result.number_of_laps ?? 0,
+      gap: result.gap_to_leader,
+      status,
+    };
+  });
+ 
+
 return (
   <div className="app">
     <header className="app-header">
@@ -141,11 +122,11 @@ return (
         </section>
       </div>
 
-      <section className="panel leaderboard-panel">
+      <section id="leaderboard" className="panel leaderboard-panel">
         <LeaderBoard leaderboard={leaderboard} />
       </section>
 
-      <div className="standings-grid">
+      <div  id="standings" className="standings-grid">
         <section className="panel">
           <ConstructorStandings sessionKey={sessionKey} />
         </section>
@@ -155,12 +136,12 @@ return (
         </section>
       </div>
 
-      <section className="panel comparison-panel">
+      <section  id="comparison" className="panel comparison-panel">
         <DriverComparison
           drivers={drivers}
           raceResult={raceResult}
         />
-      </section>
+      </section> 
 
     </main>
 

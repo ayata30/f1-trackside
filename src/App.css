@@ -139,11 +139,6 @@
   }
 }
 
-.dashboard {
-  width: min(1200px, 100%);
-  margin: 0 auto;
-  padding: 24px;
-}
 
 .selector-row {
   display: grid;
@@ -159,15 +154,7 @@
   align-items: start;
 }
 
-.panel {
-  width: 100%;
-  min-width: 0;
-  margin: 0;
-  padding: 20px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 10px;
-}
+
 
 @media (max-width: 700px) {
   .dashboard {
@@ -179,3 +166,171 @@
     grid-template-columns: 1fr;
   }
 }
+
+
+/* Navigation */
+.navbar {
+  width: 100%;
+ background: var(--bg);
+  border-bottom: 1px solid  var(--border);
+  padding: 0 32px;
+}
+
+.navbar-inner {
+  width: min(1200px, 100%);
+  min-height: 76px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+/* Brand */
+.nav-brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  flex-shrink: 0;
+}
+
+.brand-mark {
+  display: grid;
+  place-items: center;
+  width: 38px;
+  height: 34px;
+   background: var(--accent);
+  color: white;
+  font-size: 17px;
+  font-weight: 900;
+  font-style: italic;
+  letter-spacing: -1px;
+  border-radius: 5px;
+}
+
+.brand-name {
+    color: var(--text-h);
+  font-size: 15px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.brand-period {
+    color: var(--accent);
+}
+
+/* Navigation links */
+.nav-buttons {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nav-link {
+  position: relative;
+  padding: 10px 14px;
+    color: var(--text);
+  text-decoration: none;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+  border-radius: 6px;
+  transition: color 0.2s ease, background 0.2s ease;
+}
+
+.nav-link:hover {
+    color: var(--text-h);
+    background: var(--surface);
+}
+
+.nav-link.active {
+  color: var(--text-h);
+  background: var(--surface);
+}
+
+.nav-link.active::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 3px;
+  height: 2px;
+  background: var(--accent);
+  border-radius: 2px;
+}
+
+/* Responsive navigation */
+@media (max-width: 750px) {
+  .navbar {
+    padding: 0 16px;
+  }
+
+  .navbar-inner {
+    min-height: auto;
+    padding: 16px 0 12px;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .nav-buttons {
+    width: 100%;
+    gap: 4px;
+    overflow-x: auto;
+    padding-bottom: 5px;
+  }
+
+  .nav-link {
+    flex-shrink: 0;
+    padding: 9px 11px;
+    font-size: 12px;
+  }
+}
+
+
+.header-hero {
+  padding: 64px 32px 48px;
+  text-align: center;
+}
+
+.hero-label {
+  display: inline-block;
+  margin-bottom: 16px;
+  color: #e10600;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.header-hero h1 {
+  margin: 0;
+  color: var(--text-h);
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  letter-spacing: -2px;
+}
+
+.header-hero h1 span {
+  color: #e10600;
+}
+
+.header-hero p {
+  margin-top: 14px;
+  color: var(--text);
+  font-size: 16px;
+}
+
+.team-indicator {
+  display: inline-block;
+  width: 4px;
+  height: 24px;
+  margin-right: 10px;
+  border-radius: 4px;
+  vertical-align: middle;
+}
+
+.winner-row {
+  background-color: rgba(225, 6, 0, 0.12);
+}
+
