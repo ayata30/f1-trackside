@@ -2,9 +2,27 @@
 
 **The fastest way to understand a Formula 1 weekend.**
 
-F1 Trackside is a Formula 1 dashboard built with React that brings race results, driver standings, constructor standings, and driver comparisons together in one place.
 
 **[Live Demo](https://f1-trackside-zeta.vercel.app/)**
+
+## Screenshots
+
+### Race Leaderboard
+![Race Leaderboard](screenshots/leaderboard.png)
+
+### Driver Comparison
+![Driver Comparison](screenshots/driver-comparison.png)
+
+### Standings
+![Standings](screenshots/standings.png)
+
+
+## How It Works
+
+1. Users select a Formula 1 meeting.
+2. Available sessions are retrieved from the OpenF1 API.
+3. Selecting a session triggers requests for driver and session data.
+4. The dashboard processes the returned data and displays race results, standings, and driver comparisons.
 
 ## Features
 
@@ -28,6 +46,12 @@ F1 Trackside is a Formula 1 dashboard built with React that brings race results,
 F1 Trackside uses the [OpenF1 API](https://openf1.org/) to retrieve Formula 1 data, including race meetings, sessions, driver information, race results, and championship standings.
 
 API requests are managed through a shared request queue to help control request frequency and reduce rate-limit errors.
+
+## Technical Challenges
+
+- Managing API request frequency to reduce rate-limit errors.
+- Processing session results and matching driver information.
+- Handling different driver result statuses, including DNFs and lap gaps.
 
 ## Getting Started
 
@@ -67,9 +91,12 @@ API requests are managed through a shared request queue to help control request 
 ## Future Improvements
 
 - AI-powered race weekend summaries.
-- Improved classification and driver status information, including DNFs.
+- Improved classification and driver status information, including DNFs. 🟢
 - Email notifications for race updates.
 - Additional driver performance insights.
+- F1 dictionary
+- Improve standing page
+- Add Race Calendar
 
 ## Acknowledgments
 
@@ -77,4 +104,4 @@ API requests are managed through a shared request queue to help control request 
 
 ---
 
-Built with React and JavaScript.
+
